@@ -57,19 +57,23 @@
 							</table>
 							
 							<br>
-							<h5>Nilai tertinggi dari perhitungan Kedua Metode adalah <?= $rank_penyakit; ?>, dengan nilai = <?= $rank_nilai; ?></h5><br><br>
-
+							<?php foreach ($rank_penyakit as $key => $value) : ?>
+								<hr><br>
+								<h5>Nilai tertinggi dari perhitungan Kedua Metode adalah <?= $value['penyakit']; ?>, dengan nilai = <?= $value['nilai']; ?></h5><br><br>
+							
 							<h4>Keterangan :</h4><br>
 							<p>
-								<?= $data_cf['ket'][0]['ket']; ?>
+								<?= $value['ket']; ?>
 							</p>
 							
 							<br>
 
 							<h4>Solusi :</h4><br>
 							<p>
-								<?= $data_cf['ket'][0]['solusi']; ?>
+								<?= $value['solusi']; ?>
 							</p>
+
+							<?php endforeach; ?>
 						<br>
 						<a href="<?= base_url('konsultasi') ?>" class="genric-btn warning"">Ulangi Konsultasi</a>
 						<a href="<?= base_url('konsultasi/cetak/') ?>?id=<?= $this->session->userdata('id_user') ?>" class="genric-btn primary" target="_blank">Print Hasil Konsultasi</a>

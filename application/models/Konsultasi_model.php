@@ -467,6 +467,7 @@ class Konsultasi_model extends CI_Model {
         $hasilMax = max($merubahIndexCF);
         $namaPenyakit = $groupKemungkinanPenyakit[$i]['nama_penyakit'];
         if ($merubahIndexCF[$i] === $hasilMax) {
+          
           // echo "<h5>Nilai tertinggi dari perhitungan gejala adalah ".$namaPenyakit.", dengan nilai CF = ".$merubahIndexCF[$i]."</h5>";  
           
           // echo "<hr>";
@@ -474,7 +475,12 @@ class Konsultasi_model extends CI_Model {
           $ket = array();
           foreach ($query->result_array() as $row)
           {
-              $ket[] = $row;
+              // $ket[] = $row;
+              $hasilakhir_cf[] = [
+                "ph"  => $namaPenyakit,
+                "nilai" => $merubahIndexCF[$i],
+                "solusi" => $row
+              ];
           }
         }
       }
@@ -490,7 +496,7 @@ class Konsultasi_model extends CI_Model {
           "penyakit_ds" => $hasilCF['penyakit_cf'],
           "nilai" => $hasilCF['nilai']
         ],
-        "ket" => $ket
+        "hasilakhir_cf" => $hasilakhir_cf
       ];
       
       return $data;
@@ -1154,10 +1160,10 @@ class Konsultasi_model extends CI_Model {
         $hasilMax = max($merubahIndexCF);
         $namaPenyakit = $groupKemungkinanPenyakit[$i]['nama_penyakit'];
         if ($merubahIndexCF[$i] === $hasilMax) {
-          $hasilakhir_cf[$i] = [
-              "ph"  => $namaPenyakit,
-              "nilai" => $merubahIndexCF[$i]
-          ];
+          // $hasilakhir_cf[$i] = [
+          //     "ph"  => $namaPenyakit,
+          //     "nilai" => $merubahIndexCF[$i]
+          // ];
           echo "<b>Nilai tertinggi dari perhitungan metode Certainty Factor adalah <strong>".$namaPenyakit."</strong>, dengan nilai = <strong>".$merubahIndexCF[$i]."</strong></b><br>";  
           
           // echo "<hr>";
@@ -1173,8 +1179,8 @@ class Konsultasi_model extends CI_Model {
           // }
         }
       }
-      echo "<pre>";
-      print_r($hasilakhir_cf);die;
+      // echo "<pre>";
+      // print_r($hasilakhir_cf);
 
     }
 

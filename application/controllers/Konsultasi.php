@@ -53,18 +53,51 @@ class Konsultasi extends CI_Controller {
                 $data_cf = $this->Konsultasi_model->cloneProsesCf();
 
                 // echo "<pre>";
+                // print_r($data_cf['hasilakhir_cf']);
                 // print_r($data_ds);
                 // print_r($data_cf);die;
+                $nilai_rank_cf = $data_cf['hasilakhir_cf'][0]['nilai'];
+                $nilai_rank_ds = $data_ds['hasil']['nilai'];
 
-                $rank_nilai = max($data_ds['hasil']['nilai'], $data_cf['hasil']['nilai']);
-                $rank_penyakit = $data_cf['hasil']['penyakit_ds'];
+                if ($nilai_rank_cf > $nilai_rank_ds) {
+                    for ($i=0; $i < count($data_cf['hasilakhir_cf']); $i++) { 
+                        
+                        $penyakit = $data_cf['hasilakhir_cf'][$i]['ph'];
+                        $nilai = $data_cf['hasilakhir_cf'][$i]['nilai'];
+                        
+                        $rank_penyakit[] = [
+                        
+                            "penyakit" => $penyakit,
+                            "nilai" => $nilai,
+                            "ket"  => $data_cf['hasilakhir_cf'][$i]['solusi']['ket'],
+                            "solusi"  => $data_cf['hasilakhir_cf'][$i]['solusi']['solusi']
+                        ];
+                    }
+                    
+                    // $rank_nilai[] = $data_cf['hasilakhir_cf'][0]['nilai'];
+                    // $rank_penyakit[] = $nilai_rank_cf;
+                } elseif ($nilai_rank_ds > $nilai_rank_cf) {
+                    $rank_penyakit[] = [
+                        "penyakit" => $data_ds['hasil']['nilai'],
+                        "nilai" => $data_ds['hasil']['penyakit_ds'],
+                        "ket" => $data_ds['ket'][0]['ket'],
+                        "solusi" => $data_ds['ket'][0]['solusi'],
+                    ];
+                    // $rank_nilai[] = $data_ds['hasil']['nilai'];
+                    // $rank_penyakit[] = $data_ds['hasil']['penyakit_ds'];
+                }
+                
+                
+                // print_r($rank_penyakit);die;
+
+                // echo $rank_nilai = max($data_ds['hasil']['nilai'], $data_cf['hasil']['nilai']);die;
+                // $rank_penyakit = $data_cf['hasil']['penyakit_ds'];
                 
                 
                 $data = [
                     'title' =>  "Hasil Konsultasi",
                     'data_ds' => $data_ds,
                     'data_cf' => $data_cf,
-                    'rank_nilai' => $rank_nilai,
                     'rank_penyakit' => $rank_penyakit,
                     'isi'   =>  "user/hasil_konsultasi"
                 ];
