@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
-
+    
     <!-- Font Icon -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/templates/form/fonts/material-icon/css/material-design-iconic-font.min.css">
 
@@ -23,8 +23,9 @@
             <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
+                    <h2 class="form-title"><?= $title; ?></h2>
+                    <img src="<?= base_url() ?>assets/templates/form/images/gowa.png" alt="logo" width="150" style="display: block;margin-left: auto;margin-right: auto; margin-top:-5%; margin-bottom:5%;">
                     <form method="POST" id="signup-form" class="signup-form">
-                        <h2 class="form-title"><?= $title; ?></h2>
                         <div class="form-group">
                             <input type="email" class="form-input" name="email" id="email" value="<?= set_value('email') ?>" placeholder="Email"/>
                             <small style="color:red;"><i><?= form_error('email') ?></i></small>

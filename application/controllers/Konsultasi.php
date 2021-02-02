@@ -18,6 +18,7 @@ class Konsultasi extends CI_Controller {
 
     public function index()
     {
+        $user = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
         $this->session->unset_userdata('gagal');
         $gejala = $this->Gejala_model->getGejala();
         $penyakit = $this->Penyakit_model->getPenyakit();
@@ -26,6 +27,7 @@ class Konsultasi extends CI_Controller {
             'title' =>  "Konsultasi",
             'gejala'    =>  $gejala,
             'penyakit'  =>  $penyakit,
+            'user'  =>  $user,
             'isi'   =>  "user/konsultasi"
         ];
 
@@ -39,6 +41,7 @@ class Konsultasi extends CI_Controller {
         // $gejala = $this->input->post('gejala[]');
         // var_dump($gejala);
         // echo count($gejala);
+        $user = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
 
         if(isset($_POST['gejala'])){
 
@@ -69,6 +72,7 @@ class Konsultasi extends CI_Controller {
                         
                             "penyakit" => $penyakit,
                             "nilai" => $nilai,
+                            'user'  =>  $user,
                             "ket"  => $data_cf['hasilakhir_cf'][$i]['solusi']['ket'],
                             "solusi"  => $data_cf['hasilakhir_cf'][$i]['solusi']['solusi']
                         ];
@@ -78,6 +82,7 @@ class Konsultasi extends CI_Controller {
                     // $rank_penyakit[] = $nilai_rank_cf;
                 } elseif ($nilai_rank_ds > $nilai_rank_cf) {
                     $rank_penyakit[] = [
+                        'user'  =>  $user,
                         "penyakit" => $data_ds['hasil']['nilai'],
                         "nilai" => $data_ds['hasil']['penyakit_ds'],
                         "ket" => $data_ds['ket'][0]['ket'],
@@ -99,6 +104,7 @@ class Konsultasi extends CI_Controller {
                     'data_ds' => $data_ds,
                     'data_cf' => $data_cf,
                     'rank_penyakit' => $rank_penyakit,
+                    'user'  =>  $user,
                     'isi'   =>  "user/hasil_konsultasi"
                 ];
     

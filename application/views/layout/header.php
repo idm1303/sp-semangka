@@ -1,5 +1,15 @@
 <body>
 
+<style>
+	a.disabled {
+		pointer-events: none;
+		cursor: default;
+		padding-left: 150%;
+		font-size: 15px;
+		font-weight: bold;
+	}
+</style>
+
 			  <header id="header" id="home">
 			  <br>
 			    <div class="container">
@@ -13,9 +23,16 @@
 							<li><a href="<?= base_url('about') ?>">About</a></li>
 							<?php if ($this->session->userdata('role_id') == 2) { ?>
 								<li><a href="<?= base_url('konsultasi') ?>">Konsultasi</a></li>
-							<?php } ?>          
+							<?php } ?>   
+							
+							
+							<?php if ($this->session->userdata('role_id') == 2) { ?>
+								<li><a href="" class="disabled"><?= $user['nama']; ?></a></li> 
+							<?php } else { ?>   	    		
+								<li><a href="" class="disabled"><img src="<?= base_url() ?>assets/templates/form/images/gowa.png" alt="logo" width="50" style="display: block;margin-left: auto;margin-right: auto;"></a></li> 
+							<?php } ?>
 				        </ul>
-				      </nav><!-- #nav-menu-container -->	
+				      </nav><!-- #nav-menu-container -->
 						<?php if ($this->session->userdata('role_id') == 2) { ?>
 							<a href="<?= base_url('auth/logout') ?>" class="primary-btn">Logout</a>
 						<?php } else { ?>   	    		

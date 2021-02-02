@@ -23,6 +23,7 @@
                 <div class="signup-content">
                     <form action="<?= base_url('auth/register') ?>" method="POST" id="signup-form" class="signup-form">
                         <h2 class="form-title"><?= $title; ?></h2>
+                        <img src="<?= base_url() ?>assets/templates/form/images/gowa.png" alt="logo" width="150" style="display: block;margin-left: auto;margin-right: auto; margin-top:-5%; margin-bottom:5%;">
                         <div class="form-group">
                             <input type="text" class="form-input" name="nama" id="nama" value="<?= set_value('nama') ?>" placeholder="Nama Lengkap"/>
                             <small style="color:red;"><i><?= form_error('nama') ?></i></small>

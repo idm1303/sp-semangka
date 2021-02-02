@@ -601,7 +601,8 @@ class Konsultasi_model extends CI_Model {
                                     // echo $densitas1[$x][0]." x ".$densitas2[$y][0]." = ".$densitas1[$x][0].",".$densitas2[$y][0]."<br>";
                                     // echo $densitas1[$x][1]." x ".$densitas2[$y][1]." = ".$densitas_baru[$k]."<br>";
                                   }else{
-                                    $densitas_baru[$k]+=$densitas1[$x][1]*$densitas2[$y][1];
+                                    // echo $densitas_baru[$k]."<br>";
+                                    $densitas_baru[$k]+=($densitas1[$x][1]*$densitas2[$y][1]);
                                     // echo $densitas1[$x][1]." x ".$densitas2[$y][1]." = ".$densitas_baru[$k]."<br>";
                                   }
                                   
@@ -615,16 +616,17 @@ class Konsultasi_model extends CI_Model {
                     foreach($densitas_baru as $k=>$d){
                       
                         if($k!="&theta;"){
-                            
+
                             $densitas_baru[$k] = $d / (1-(isset($densitas_baru["&theta;"])?$densitas_baru["&theta;"]:0));
 
-                            $k." = ".round($d,2)." / ".round((1-(isset($densitas_baru["&theta;"])?$densitas_baru["&theta;"]:0)),2)." = ".round($densitas_baru[$k],2)."<br>";
+                            // echo $k." = ".$d." / ".(1-(isset($densitas_baru["&theta;"])?$densitas_baru["&theta;"]:0))." = ".$densitas_baru[$k]."<br>";
                         }
                         
                         // print_r($densitas_baru);
                         $riwayat = $densitas_baru;
                         $r++;
                     }
+                    // echo "<hr>";
                     
                     $riwayat_x[] = $riwayat;
                     // echo "<hr><br>";
@@ -637,7 +639,7 @@ class Konsultasi_model extends CI_Model {
                 unset($densitas_baru["&theta;"]);
                 arsort($densitas_baru);
                 // echo "<pre>";
-                // print_r($densitas_baru);
+                // print_r($densitas_baru);die;
                 // echo "<br>=============================================================<br>";
                 $kd_penyakit = array();
                 foreach ($densitas_baru as $key => $value) {
@@ -648,11 +650,16 @@ class Konsultasi_model extends CI_Model {
                 $kds = str_replace(",", "','", $kds_penyakit);
 
                 $query = $this->db->query("SELECT nama_penyakit FROM tb_penyakit WHERE kode_penyakit IN ('$kds')");
-               
+                $nama_penyakit = $query->result_array();
                 $listPenyakit = array();
                 $no=0;
                 $densitas = array_values($densitas_baru);
-                foreach ($query->result_array() as $row)
+                // echo "<pre>";
+                // echo count($nama_penyakit);
+                // print_r($nama_penyakit);
+                // print_r($densitas);
+                
+                foreach ($nama_penyakit as $row)
                 {
                     $listPenyakit[$no]['nama_penyakit'] = $row['nama_penyakit'];
                     $listPenyakit[$no]['densitas'] = $densitas[$no];
